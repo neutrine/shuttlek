@@ -33,8 +33,8 @@ internal object ProducerRecordBuilder {
         val headers = RecordHeaders()
             .add(MessageHeaders.SERIALIZER_TYPE, producerMessage.serializerType.code.toByteArray())
 
-        producerMessage.schemaName?.let { headers.add(MessageHeaders.SCHEMA_NAME, it.toByteArray())}
-        producerMessage.schemaVersion?.let { headers.add(MessageHeaders.SCHEMA_VERSION, it.toByteArray())}
+        producerMessage.schemaName?.let { headers.add(MessageHeaders.SCHEMA_NAME, it.toByteArray()) }
+        producerMessage.schemaVersion?.let { headers.add(MessageHeaders.SCHEMA_VERSION, it.toByteArray()) }
 
         return ProducerRecord<String, ByteArray>(producerMessage.topic, null, producerMessage.key, value, headers)
     }

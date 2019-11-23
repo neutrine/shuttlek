@@ -2,15 +2,20 @@ package com.neutrine.shuttlek.common.serializer
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import java.time.*
-import java.util.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.OffsetDateTime
+import java.time.OffsetTime
+import java.time.ZonedDateTime
+import java.util.Date
 import kotlin.test.assertEquals
 
-internal class JsonSerializerSpec: Spek({
+internal class JsonSerializerSpec : Spek({
     describe("A JsonSerializer") {
         describe("serialize") {
             it("should serialize simpleObject") {
-                assertEquals("""{"string":"Simple string","int":42,"double":3.14}""", String(JsonSerializer.serialize(simpleObject)))
+                assertEquals("""{"string":"Simple string","int":42,"double":3.14}""", String(JsonSerializer.serialize(SimpleObject)))
             }
 
             it("should serialize Date as epochMillis") {
@@ -43,7 +48,7 @@ internal class JsonSerializerSpec: Spek({
         }
     }
 })
-internal object simpleObject {
+internal object SimpleObject {
     val string = "Simple string"
     val int = 42
     val double = 3.14

@@ -2,6 +2,7 @@ plugins {
     base
     java
     kotlin("jvm") version "1.3.50"
+    id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
 }
 
 allprojects {
@@ -15,6 +16,7 @@ allprojects {
 
 subprojects {
     apply(plugin = "java")
+    plugins.apply("org.jlleitschuh.gradle.ktlint")
 
     val spekVersion = "2.0.8"
 
@@ -35,5 +37,12 @@ subprojects {
 
     configure<JavaPluginConvention> {
         sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    ktlint {
+        verbose.set(true)
+        outputToConsole.set(true)
+        outputColorName.set("RED")
+        disabledRules.add("import-ordering")
     }
 }

@@ -11,13 +11,13 @@ import org.apache.kafka.clients.producer.RecordMetadata
 import org.apache.kafka.common.header.Headers
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import java.util.*
+import java.util.Date
 import java.util.concurrent.Future
 import kotlin.test.assertEquals
 
-object KafkaMessagePublisherSpec: Spek({
+object KafkaMessagePublisherSpec : Spek({
     describe("A KafkaMessagePublisher") {
-        val kafkaProducerMock by memoized { mockk<KafkaProducer<String, ByteArray>>()}
+        val kafkaProducerMock by memoized { mockk<KafkaProducer<String, ByteArray>>() }
         val kafkaMessagePublisher by memoized { KafkaMessagePublisher(kafkaProducerMock) }
 
         describe("publish") {
@@ -74,7 +74,6 @@ object KafkaMessagePublisherSpec: Spek({
                 every { kafkaProducerMock.send(any()) } returns futureMock
                 assertEquals(futureMock, kafkaMessagePublisher.publishAsync(message))
             }
-
         }
     }
 })

@@ -16,10 +16,9 @@
 
 package com.neutrine.shuttlek.producer
 
-import org.apache.kafka.clients.producer.KafkaProducer
-import org.apache.kafka.clients.producer.ProducerRecord
-import org.apache.kafka.clients.producer.RecordMetadata
 import java.util.concurrent.Future
+import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.RecordMetadata
 
 /**
  *  A kafka message publisher for the given [kafkaProducer].

@@ -17,7 +17,7 @@
 package com.neutrine.shuttlek.producer
 
 import com.neutrine.shuttlek.common.MessageHeaders
-import com.neutrine.shuttlek.common.serializer.JsonSerializer
+import com.neutrine.shuttlek.common.serdes.JsonSerdes
 import com.neutrine.shuttlek.common.serializer.SerializerType
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.header.internals.RecordHeaders
@@ -41,6 +41,6 @@ internal object ProducerRecordBuilder {
 
     private fun serializeValue(producerMessage: ProducerMessage): ByteArray =
         when (producerMessage.serializerType) {
-            SerializerType.Json -> JsonSerializer.serialize(producerMessage.value)
+            SerializerType.Json -> JsonSerdes.serialize(producerMessage.value)
         }
 }

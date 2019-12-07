@@ -1,11 +1,10 @@
 os: linux
-language: java
-dist: trusty
-jdk:
-  - openjdk8
-  - oraclejdk8
-
-install: true
+matrix:
+  include:
+    - dist: trusty
+      jdk: oraclejdk8
+    - dist: trusty
+      jdk: openjdk8
 
 addons:
   sonarcloud:
@@ -15,19 +14,7 @@ addons:
 
 script:
   - "./gradlew clean"
-
-jobs:
-  include:
-    - stage: compilation
-      script: "./gradlew classes"
-    - stage: lint
-      script: "./gradlew ktlintCheck"
-    - stage: unit test
-      script: "./gradlew test"
-    - stage: code coverage and quality
-      script: "./gradlew jacocoTestReport sonarqube"
-    - stage: build
-      script: "./gradlew build"
+  - "./gradlew jacocoTestReport sonarqube build"
 
 cache:
   directories:

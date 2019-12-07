@@ -3,6 +3,7 @@ plugins {
     java
     kotlin("jvm") version "1.3.50"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
+    id("org.sonarqube") version "2.8"
 }
 
 allprojects {
@@ -11,6 +12,12 @@ allprojects {
 
     repositories {
         jcenter()
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "neutrine_shuttlek")
     }
 }
 

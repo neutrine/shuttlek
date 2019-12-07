@@ -2,6 +2,7 @@ plugins {
     base
     java
     kotlin("jvm") version "1.3.50"
+    jacoco
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
     id("org.sonarqube") version "2.8"
 }
@@ -18,12 +19,15 @@ allprojects {
 sonarqube {
     properties {
         property("sonar.projectKey", "neutrine_shuttlek")
+        property("sonar.junit.reportPaths", "build/test-results/test")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
 subprojects {
     apply(plugin = "java")
-    plugins.apply("org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "jacoco")
 
     val spekVersion = "2.0.8"
 
@@ -39,6 +43,12 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform {
             includeEngines("spek2")
+        }
+    }
+
+    tasks.jacocoTestReport {
+        reports {
+            xml.isEnabled = true
         }
     }
 

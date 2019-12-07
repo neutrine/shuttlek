@@ -1,5 +1,6 @@
 os: linux
 language: java
+dist: trusty
 jdk:
   - openjdk8
   - oraclejdk8
@@ -12,10 +13,13 @@ addons:
     token:
       secure: "QHDc7Eyy3+2ei3poUiZnSEmscB2iKmnn36CN4bqGZqN30X+AuOdJAswNsGyOzjkFPA5Bjy2EEX5SBIcb9UyYcfCqITpXMYK0/eJX6EzyKHpO8zWijr6lhNC9RTZFiCTFCVGMTNnaLINvtyCcOKh9i/7CMx20ZHcGNNYSqW5SGf1kNd7RRtftt0THoNJ1ycyPLG4zKgY9Q73/YZ++JUMF35MwHTfrdV8/E+KAqNBG2IVAktTIjbRyCc9FBoRNBTdC2Hj6saFsbF3HrhOdyW2G4R7GreQDQpJC7/YtTkaX74PxuGLhqrr3vifqjJExIpn6SrX18joNZbKFu3CYNvxC6h4B39eKrH3fsXkkdYUYd6Keb34QljHQj7hX3B480VvGaPl4GnDGVXeaGaH6h4CQKbUZp/dFXgblRRdizeSA9AARbC2FoGNR8XxkIC6jlzXZPMAbNtEXBYkGg7/hqgD4Jr3ezz+FWEXH7VTcjv440ipuiVRWysiEP1b/Wp6L9mc5K7tq6DNeErqQvwYtmmlT5Vn2AsXFDWkxegSC/PfJsig+UE6nyLZTCvgzBpAUhojtLJiO6EcZo+d6oAYpM7EVaykjOSc5hxBZhytC/AVj990vnkkvrNRgoNCZYtxIErWveXdhCZVY36ga/Fr2jmqO5WU0SkEHZcYk/j4zXdLfwVg="
 
+script:
+  - "./gradlew clean"
+
 jobs:
   include:
     - stage: compilation
-      script: "./gradlew clean classes"
+      script: "./gradlew classes"
     - stage: lint
       script: "./gradlew ktlintCheck"
     - stage: unit test

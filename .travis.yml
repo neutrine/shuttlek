@@ -1,10 +1,8 @@
+os: linux
 language: java
-matrix:
-  include:
-  - dist: trusty
-    jdk: oraclejdk8
-  - dist: trusty
-    jdk: openjdk8
+jdk:
+  - openjdk8
+  - oraclejdk8
 
 install: true
 

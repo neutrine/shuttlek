@@ -16,6 +16,7 @@
 
 package com.neutrine.shuttlek.producer
 
+import com.neutrine.shuttlek.common.Schema
 import com.neutrine.shuttlek.common.serializer.SerializerType
 
 /**
@@ -24,8 +25,7 @@ import com.neutrine.shuttlek.common.serializer.SerializerType
  * @property key Message key value
  * @property value Message content
  * @property serializerType Serializer to use when sending the message
- * @property schemaName Schema name to use for message serialization
- * @property schemaVersion Schema version to use for message serialization
+ * @property schema Schema to use for message serialization
  *
  * @author Luiz Picanço
  */
@@ -34,6 +34,5 @@ data class ProducerMessage(
     val key: String? = null,
     val value: Any,
     val serializerType: SerializerType = SerializerType.Json,
-    val schemaName: String? = null,
-    val schemaVersion: String? = null
+    val schema: Schema? = null
 )

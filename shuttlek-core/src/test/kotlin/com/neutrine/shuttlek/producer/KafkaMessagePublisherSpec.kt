@@ -1,14 +1,15 @@
 package com.neutrine.shuttlek.producer
 
 import com.neutrine.shuttlek.common.MessageHeaders
+import com.neutrine.shuttlek.common.Schema
 import com.neutrine.shuttlek.common.serializer.SerializerType
+import com.neutrine.shuttlek.common.valueAsString
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.clients.producer.RecordMetadata
-import org.apache.kafka.common.header.Headers
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 import java.util.Date
@@ -26,8 +27,7 @@ object KafkaMessagePublisherSpec : Spek({
                 key = "42",
                 value = Date(),
                 serializerType = SerializerType.Json,
-                schemaName = "Base",
-                schemaVersion = "1") }
+                schema = Schema("Base", "1")) }
             val producerRecordSlot by memoized { slot<ProducerRecord<String, ByteArray>>() }
 
             beforeEachTest {
@@ -49,15 +49,15 @@ object KafkaMessagePublisherSpec : Spek({
             }
 
             it("should send serialization type header") {
-                assertEquals(message.serializerType.code, getHeaderAsString(producerRecordSlot.captured.headers(), MessageHeaders.SERIALIZER_TYPE))
+                assertEquals(message.serializerType.code, producerRecordSlot.captured.headers().valueAsString(MessageHeaders.SERIALIZER_TYPE))
             }
 
             it("should send schema name header") {
-                assertEquals(message.schemaName, getHeaderAsString(producerRecordSlot.captured.headers(), MessageHeaders.SCHEMA_NAME))
+                assertEquals(message.schema?.name, producerRecordSlot.captured.headers().valueAsString(MessageHeaders.SCHEMA_NAME))
             }
 
             it("should send schema version header") {
-                assertEquals(message.schemaVersion, getHeaderAsString(producerRecordSlot.captured.headers(), MessageHeaders.SCHEMA_VERSION))
+                assertEquals(message.schema?.version, producerRecordSlot.captured.headers().valueAsString(MessageHeaders.SCHEMA_VERSION))
             }
         }
         describe("publish async") {
@@ -66,8 +66,7 @@ object KafkaMessagePublisherSpec : Spek({
                 key = "42",
                 value = Date(),
                 serializerType = SerializerType.Json,
-                schemaName = "Base",
-                schemaVersion = "1") }
+                schema = Schema("Base", "1")) }
 
             it("should send message async") {
                 val futureMock = mockk<Future<RecordMetadata>>()
@@ -77,5 +76,3 @@ object KafkaMessagePublisherSpec : Spek({
         }
     }
 })
-
-fun getHeaderAsString(headers: Headers, key: String): String = String(headers.lastHeader(key).value())

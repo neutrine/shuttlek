@@ -14,22 +14,8 @@
  * limitations under the License.
  */
 
-package com.neutrine.shuttlek.common.serializer
+package com.neutrine.shuttlek.consumer
 
-/**
- * Serializer types
- *
- * @author Luiz Picanço
- */
-enum class SerializerType(val code: String) {
-    /**
-     * Json serializer type
-     */
-    Json("json");
-
-    companion object {
-        fun parseCode(code: String): SerializerType {
-            return values().first { p -> p.code.equals(code, true) }
-        }
-    }
+interface MessageHandler {
+    fun handle(consumerMessage: ConsumerMessage)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original author or authors.
+ * Copyright 2019, the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.neutrine.shuttlek.common.serializer
+package com.neutrine.shuttlek.consumer
 
 /**
- * Serializer types
- *
+ * Filter for Schemas
  * @author Luiz Picanço
  */
-enum class SerializerType(val code: String) {
-    /**
-     * Json serializer type
-     */
-    Json("json");
+class ConsumerRecordFilter(private val schemaNames: List<String> = emptyList()) {
 
-    companion object {
-        fun parseCode(code: String): SerializerType {
-            return values().first { p -> p.code.equals(code, true) }
-        }
+    /**
+     * Returns [true] if a message should be processed.
+     * @param schemaName Name of the schema to filter.
+     */
+    fun filter(schemaName: String?): Boolean {
+        return schemaNames.isEmpty() || schemaNames.contains(schemaName)
     }
 }

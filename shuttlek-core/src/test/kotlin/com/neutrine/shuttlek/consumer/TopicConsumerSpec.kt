@@ -29,7 +29,7 @@ internal object TopicConsumerSpec : Spek({
 
             beforeEachTest {
                 coEvery { kafkaConsumerMock.poll(topicConsumer.pollTimeout) } coAnswers {
-                    delay(10)
+                    delay(30)
                     ConsumerRecords(mutableMapOf(TopicPartition("topic", 1) to listOf(consumerRecord)))
                 }
 
@@ -39,11 +39,11 @@ internal object TopicConsumerSpec : Spek({
             }
 
             it("should call the consumerRecordProcessor") {
-                verify(timeout = 3000L) { consumerRecordProcessorMock.process(consumerRecord) }
+                verify(timeout = 10000L) { consumerRecordProcessorMock.process(consumerRecord) }
             }
 
             it("should commit the message after the processor") {
-                verify(timeout = 3000) { kafkaConsumerMock.commitSync(capture(topicPartitionOffsetSlot)) }
+                verify(timeout = 10000) { kafkaConsumerMock.commitSync(capture(topicPartitionOffsetSlot)) }
 
                 with(topicPartitionOffsetSlot.captured.keys.first()) {
                     assertEquals(consumerRecord.topic(), topic())

@@ -38,12 +38,9 @@ internal object TopicConsumerSpec : Spek({
                 }
             }
 
-            it("should call the consumerRecordProcessor") {
+            it("should call the consumerRecordProcessor and commit the message") {
                 verify(timeout = 10000L) { consumerRecordProcessorMock.process(consumerRecord) }
-            }
-
-            it("should commit the message after the processor") {
-                verify(timeout = 10000) { kafkaConsumerMock.commitSync(capture(topicPartitionOffsetSlot)) }
+                verify(timeout = 10000L) { kafkaConsumerMock.commitSync(capture(topicPartitionOffsetSlot)) }
 
                 with(topicPartitionOffsetSlot.captured.keys.first()) {
                     assertEquals(consumerRecord.topic(), topic())

@@ -14,7 +14,7 @@ addons:
 
 script:
   - "./gradlew clean"
-  - "./gradlew jacocoTestReport sonarqube build"
+  - "./gradlew jacocoTestReport sonarqube build --info"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

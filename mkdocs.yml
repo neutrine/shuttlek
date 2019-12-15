@@ -1,0 +1,14 @@
+site_name: ShuttleK
+copyright: 'Copyright &copy; 2019 the original author or authors.'
+repo_url: https://github.com/neutrine/shuttlek/
+nav:
+  - Home: index.md
+  - API:
+      - 'shuttlek-core': 'api/shuttlek-core/index.md'
+theme:
+  name: 'material'
+  logo:
+    icon: 'airport_shuttle'
+  feature:
+    tabs: true
+

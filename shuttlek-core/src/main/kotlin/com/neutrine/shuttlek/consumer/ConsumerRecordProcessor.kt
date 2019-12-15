@@ -28,7 +28,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
  */
 class ConsumerRecordProcessor(
     private val messageHandler: MessageHandler,
-    private val consumerRecordFilter: ConsumerRecordFilter
+    private val consumerRecordFilter: ConsumerRecordFilter = ConsumerRecordFilter()
 ) {
     fun process(record: ConsumerRecord<String, ByteArray>) {
         val headers = record.headers()

@@ -28,6 +28,11 @@ class ConsumerMessage(
     val schemaVersion: String?,
     val serializerType: SerializerType?
 ) {
+    /**
+     * Deserialize the [value] as a [deserializeToType] type
+     * @param deserializeToType Type to deserialize the [value]
+     * @return [value] deserialized as [deserializeToType]
+     */
     fun <T : Any> valueAs(deserializeToType: KClass<T>): T {
         return JsonSerdes.deserialize(value, deserializeToType)
     }

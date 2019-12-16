@@ -1,3 +1,4 @@
 rootProject.name = 'shuttlek'
 include 'shuttlek-core'
+include 'examples:simple'
 

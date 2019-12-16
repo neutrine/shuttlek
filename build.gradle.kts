@@ -22,6 +22,7 @@ allprojects {
         outputFormat = "gfm"
         outputDirectory = "$buildDir/dokka"
         outputDirectory = "$rootDir/docs/api"
+        subProjects = listOf("shuttlek-core")
     }
 }
 

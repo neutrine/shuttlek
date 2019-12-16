@@ -16,7 +16,9 @@
 
 package com.neutrine.shuttlek.consumer
 
+import com.neutrine.shuttlek.common.serdes.JsonSerdes
 import com.neutrine.shuttlek.common.serializer.SerializerType
+import kotlin.reflect.KClass
 
 class ConsumerMessage(
     val partition: Int,
@@ -25,4 +27,8 @@ class ConsumerMessage(
     val schemaName: String?,
     val schemaVersion: String?,
     val serializerType: SerializerType?
-)
+) {
+    fun <T : Any> valueAs(deserializeToType: KClass<T>): T {
+        return JsonSerdes.deserialize(value, deserializeToType)
+    }
+}

@@ -1,0 +1,8 @@
+$dokka.format:gfm
+$dokka.linkExtension:md
+$dokka.location:com.neutrine.shuttlek.common$valueAsString(org.apache.kafka.common.header.Headers, kotlin.String)com.neutrine.shuttlek.common/org.apache.kafka.common.header.-headers/value-as-string.md
+com.neutrine.shuttlek.common
+com.neutrine.shuttlek.common.serdes
+com.neutrine.shuttlek.common.serializer
+com.neutrine.shuttlek.consumer
+com.neutrine.shuttlek.producer

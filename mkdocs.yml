@@ -7,8 +7,8 @@ nav:
       - 'shuttlek-core': 'api/shuttlek-core/index.md'
 theme:
   name: 'material'
-  logo:
-    icon: 'airport_shuttle'
+  icon:
+    logo: 'fontawesome/solid/shuttle-van'    
   feature:
     tabs: true
 

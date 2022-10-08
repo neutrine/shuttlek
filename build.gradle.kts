@@ -1,21 +1,19 @@
 plugins {
-    base
-    java
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.7.10"
     jacoco
-    id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("org.sonarqube") version "2.8"
     id("org.jetbrains.dokka") version "0.10.0"
 }
 
 allprojects {
     group = "com.neutrine.shuttlek"
-    version = "1.0.0-alpha-1-SNAPSHOT"
+    version = "1.0.0-SNAPSHOT"
 
     apply(plugin = "org.jetbrains.dokka")
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
 
     tasks.dokka {
@@ -35,14 +33,13 @@ sonarqube {
 }
 
 subprojects {
-    apply(plugin = "java")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
 
     val spekVersion = "2.0.8"
 
     dependencies {
-        implementation(kotlin("stdlib-jdk8"))
         testImplementation(kotlin("reflect"))
         testImplementation(kotlin("test"))
         testImplementation("io.mockk:mockk:1.9.3")
@@ -62,8 +59,9 @@ subprojects {
         }
     }
 
-    configure<JavaPluginConvention> {
-        sourceCompatibility = JavaVersion.VERSION_1_8
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+        kotlinOptions.freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
 
     ktlint {

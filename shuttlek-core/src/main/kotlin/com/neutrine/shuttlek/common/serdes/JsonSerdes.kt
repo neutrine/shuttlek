@@ -39,26 +39,42 @@ import kotlin.reflect.KClass
  */
 internal object JsonSerdes : Serdes {
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
-        .registerModule(JavaTimeModule()
-            .addSerializer(LocalTime::class.java, object : JsonSerializer<LocalTime>() {
-                override fun serialize(value: LocalTime, gen: JsonGenerator, serializers: SerializerProvider) {
-                    gen.writeNumber(ChronoUnit.MILLIS.between(LocalTime.MIDNIGHT, value))
-                }
-            }).addDeserializer(LocalTime::class.java, object : JsonDeserializer<LocalTime>() {
-                override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): LocalTime =
-                    LocalTime.MIDNIGHT.plus(p.longValue, ChronoUnit.MILLIS)
-            }).addSerializer(LocalDate::class.java, object : JsonSerializer<LocalDate>() {
-                override fun serialize(value: LocalDate, gen: JsonGenerator, serializers: SerializerProvider) {
-                    gen.writeNumber(value.toEpochDay())
-                }
-            }).addSerializer(LocalDateTime::class.java, object : JsonSerializer<LocalDateTime>() {
-                override fun serialize(value: LocalDateTime, gen: JsonGenerator, serializers: SerializerProvider) {
-                    gen.writeNumber(ChronoUnit.MILLIS.between(LocalDateTime.of(LocalDate.ofEpochDay(0), LocalTime.MIDNIGHT), value))
-                }
-            }).addDeserializer(LocalDateTime::class.java, object : JsonDeserializer<LocalDateTime>() {
-                override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): LocalDateTime =
-                    LocalDateTime.of(LocalDate.ofEpochDay(0), LocalTime.MIDNIGHT).plus(p.longValue, ChronoUnit.MILLIS)
-            })
+        .registerModule(
+            JavaTimeModule()
+                .addSerializer(
+                    LocalTime::class.java,
+                    object : JsonSerializer<LocalTime>() {
+                        override fun serialize(value: LocalTime, gen: JsonGenerator, serializers: SerializerProvider) {
+                            gen.writeNumber(ChronoUnit.MILLIS.between(LocalTime.MIDNIGHT, value))
+                        }
+                    }
+                ).addDeserializer(
+                    LocalTime::class.java,
+                    object : JsonDeserializer<LocalTime>() {
+                        override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): LocalTime =
+                            LocalTime.MIDNIGHT.plus(p.longValue, ChronoUnit.MILLIS)
+                    }
+                ).addSerializer(
+                    LocalDate::class.java,
+                    object : JsonSerializer<LocalDate>() {
+                        override fun serialize(value: LocalDate, gen: JsonGenerator, serializers: SerializerProvider) {
+                            gen.writeNumber(value.toEpochDay())
+                        }
+                    }
+                ).addSerializer(
+                    LocalDateTime::class.java,
+                    object : JsonSerializer<LocalDateTime>() {
+                        override fun serialize(value: LocalDateTime, gen: JsonGenerator, serializers: SerializerProvider) {
+                            gen.writeNumber(ChronoUnit.MILLIS.between(LocalDateTime.of(LocalDate.ofEpochDay(0), LocalTime.MIDNIGHT), value))
+                        }
+                    }
+                ).addDeserializer(
+                    LocalDateTime::class.java,
+                    object : JsonDeserializer<LocalDateTime>() {
+                        override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): LocalDateTime =
+                            LocalDateTime.of(LocalDate.ofEpochDay(0), LocalTime.MIDNIGHT).plus(p.longValue, ChronoUnit.MILLIS)
+                    }
+                )
         ).enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
 

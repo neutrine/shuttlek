@@ -8,7 +8,7 @@ nav:
 theme:
   name: 'material'
   icon:
-    logo: 'fontawesome/solid/shuttle-van'    
+    logo: ':fontawesome-solid-van-shuttle:'
   feature:
     tabs: true
 

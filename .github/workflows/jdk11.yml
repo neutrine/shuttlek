@@ -45,8 +45,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - name: Dokka build
-        run: ./gradlew dokka
+        run: ./gradlew dokkaGfm
       - name: Deploy docs 🚀
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        uses: mhausenblas/mkdocs-deploy-gh-pages@1.25
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,7 +3,7 @@ plugins {
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("org.sonarqube") version "2.8"
-    id("org.jetbrains.dokka") version "0.10.0"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 allprojects {
@@ -14,13 +14,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-    }
-
-    tasks.dokka {
-        outputFormat = "gfm"
-        outputDirectory = "$buildDir/dokka"
-        outputDirectory = "$rootDir/docs/api"
-        subProjects = listOf("shuttlek-core")
     }
 }
 
@@ -62,6 +55,12 @@ subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
         kotlinOptions.freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    }
+
+    tasks {
+        dokkaGfm {
+            outputDirectory.set(file("$rootDir/docs/api"))
+        }
     }
 
     ktlint {

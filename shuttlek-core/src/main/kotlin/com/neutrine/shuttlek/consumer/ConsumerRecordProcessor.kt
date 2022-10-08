@@ -46,7 +46,8 @@ class ConsumerRecordProcessor(
             value = record.value(),
             schemaName = schemaName,
             schemaVersion = schemaVersion,
-            serializerType = serializer?.let { SerializerType.parseCode(serializer) })
+            serializerType = serializer?.let { SerializerType.parseCode(serializer) }
+        )
 
         messageHandler.handle(consumerMessage)
     }

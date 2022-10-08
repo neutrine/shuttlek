@@ -71,10 +71,14 @@ internal object ConsumerRecordProcessorSpec : Spek({
             val schemaName = "testSchema"
             val schemaVersion = "v1"
 
-            val consumerRecord by memoized { ConsumerRecord<String, ByteArray>("topic", 1, 1, "key", "value".toByteArray())
-                .apply { headers().add(MessageHeaders.SERIALIZER_TYPE, serializerType.code.toByteArray())
-                    .add(MessageHeaders.SCHEMA_NAME, schemaName.toByteArray())
-                    .add(MessageHeaders.SCHEMA_VERSION, schemaVersion.toByteArray()) } }
+            val consumerRecord by memoized {
+                ConsumerRecord<String, ByteArray>("topic", 1, 1, "key", "value".toByteArray())
+                    .apply {
+                        headers().add(MessageHeaders.SERIALIZER_TYPE, serializerType.code.toByteArray())
+                            .add(MessageHeaders.SCHEMA_NAME, schemaName.toByteArray())
+                            .add(MessageHeaders.SCHEMA_VERSION, schemaVersion.toByteArray())
+                    }
+            }
 
             val consumerMessageSlot by memoized { slot<ConsumerMessage>() }
 

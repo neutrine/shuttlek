@@ -22,12 +22,15 @@ object KafkaMessagePublisherSpec : Spek({
         val kafkaMessagePublisher by memoized { KafkaMessagePublisher(kafkaProducerMock) }
 
         describe("publish") {
-            val message by memoized { ProducerMessage(
-                topic = "topic",
-                key = "42",
-                value = Date(),
-                serializerType = SerializerType.Json,
-                schema = Schema("Base", "1")) }
+            val message by memoized {
+                ProducerMessage(
+                    topic = "topic",
+                    key = "42",
+                    value = Date(),
+                    serializerType = SerializerType.Json,
+                    schema = Schema("Base", "1")
+                )
+            }
             val producerRecordSlot by memoized { slot<ProducerRecord<String, ByteArray>>() }
 
             beforeEachTest {
@@ -61,12 +64,15 @@ object KafkaMessagePublisherSpec : Spek({
             }
         }
         describe("publish async") {
-            val message by memoized { ProducerMessage(
-                topic = "topic",
-                key = "42",
-                value = Date(),
-                serializerType = SerializerType.Json,
-                schema = Schema("Base", "1")) }
+            val message by memoized {
+                ProducerMessage(
+                    topic = "topic",
+                    key = "42",
+                    value = Date(),
+                    serializerType = SerializerType.Json,
+                    schema = Schema("Base", "1")
+                )
+            }
 
             it("should send message async") {
                 val futureMock = mockk<Future<RecordMetadata>>()
